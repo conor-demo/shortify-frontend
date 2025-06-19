@@ -1,6 +1,7 @@
-// vue.config.js
-module.exports = {
-  configureWebpack: {
-    entry: './main.js',
-  },
-}
+const { defineConfig } = require('@vue/cli-service')
+module.exports = defineConfig({
+  transpileDependencies: true,
+  devServer: {
+    port: 8080
+  }
+})
