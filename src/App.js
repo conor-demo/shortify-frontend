@@ -7,10 +7,16 @@ function App() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    const id = Date.now().toString(); // simple unique ID, can use uuid instead
+    const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:3001/links';
+
     try {
-      const apiUrl = process.env.API_URL || 'http://localhost:3001/links';
-      const response = await axios.post(apiUrl, { link });
-      setMessage(response.data.message);
+      const response = await axios.post(apiUrl, {
+        id,
+        url: link,
+      });
+      setMessage(response.data.message || 'Link uploaded!');
       setLink('');
     } catch (error) {
       setMessage('Error uploading link.');
@@ -19,21 +25,21 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <h1>Link Uploader</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Link:
-          <input
-            type="text"
-            value={link}
-            onChange={(e) => setLink(e.target.value)}
-          />
-        </label>
-        <button type="submit">Upload Link</button>
-      </form>
-      {message && <p>{message}</p>}
-    </div>
+      <div className="App">
+        <h1>Link Uploader</h1>
+        <form onSubmit={handleSubmit}>
+          <label>
+            Link:
+            <input
+                type="text"
+                value={link}
+                onChange={(e) => setLink(e.target.value)}
+            />
+          </label>
+          <button type="submit">Upload Link</button>
+        </form>
+        {message && <p>{message}</p>}
+      </div>
   );
 }
 
