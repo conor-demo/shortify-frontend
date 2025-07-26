@@ -13,7 +13,7 @@ function App() {
 
     try {
       const response = await axios.post(apiUrl, {
-        id,
+        shortId: id,
         url: link,
       });
       setMessage(response.data.message || 'Link uploaded!');
